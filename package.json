@@ -1,0 +1,22 @@
+{
+  "name": "3d-scene",
+  "version": "1.0.0",
+  "description": "3d scene for dolan.bio",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "test": "npm run lint",
+    "tsc": "tsc -p .",
+    "uglify": "uglifyjs --compress --mangle --output='dist/bundle.js' -- dist/bundle.js",
+    "build": "npm run tsc && npm run uglify",
+    "start": "npm run tsc && http-server ."
+  },
+  "author": "Dolan Miu",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/three": "^0.83.1",
+    "http-server": "^0.9.0",
+    "tslint": "^4.4.2",
+    "typescript": "^2.1.5",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
+  }
+}

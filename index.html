@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>3D Scene</title>
+    <script src="dist/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <div id="content"></div>
+    <script>
+        ThreeDScene.Main.run(document.getElementById('content'));
+        ThreeDScene.Main.setSize($('body').innerWidth(), window.innerHeight);
+
+        function tiltCalculator(screenPosY) {
+            var scaledY = screenPosY / 170;
+            return 70 * Math.exp(-scaledY) + 0.1;
+        }
+
+        window.addEventListener('scroll', function () {
+            var top = this.scrollY,
+                convertedTop = tiltCalculator(top);
+            ThreeDScene.Main.tilt(convertedTop);
+        }, false);
+
+        window.addEventListener('resize', function () {
+            ThreeDScene.Main.setSize($('body').innerWidth(), window.innerHeight);
+        }, false);
+    </script>
+</body>
+
+</html>
