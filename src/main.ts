@@ -25,6 +25,7 @@ namespace ThreeDScene {
                 window.requestAnimationFrame(gameLoop);
             };
             gameLoop();
+            this.addListeners(this.renderer, this.camera);
         }
 
         public static tilt(amount: number): void {
@@ -77,10 +78,6 @@ namespace ThreeDScene {
             // light.shadow.mapSize.width = 4096; // default is 512
             // light.shadow.mapSize.height = 4096; // default is 512
             scene.add(light);
-        }
-
-        private static loadMisc(meshCreator: MeshCreator): void {
-            this.addListeners(this.renderer, this.camera);
         }
 
         private static setupCamera(): void {
