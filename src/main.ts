@@ -79,27 +79,6 @@ namespace ThreeDScene {
             scene.add(light);
         }
 
-        private static initSky(): void {
-            const sphereGeometry = new THREE.SphereGeometry(3000, 60, 40);
-            const uniforms = {
-                texture: {
-                    type: "t",
-                    value: THREE.ImageUtils.loadTexture("images/highres.jpg"),
-                },
-            };
-
-            const material = new THREE.ShaderMaterial({
-                uniforms: uniforms,
-                vertexShader: document.getElementById("sky-vertex").textContent,
-                fragmentShader: document.getElementById("sky-fragment").textContent,
-            });
-
-            const skyBox = new THREE.Mesh(sphereGeometry, material);
-            skyBox.scale.set(-1, 1, 1);
-            skyBox.rotation.order = "XYZ";
-            this.scene.add(skyBox);
-        }
-
         private static loadMisc(meshCreator: MeshCreator): void {
             this.addListeners(this.renderer, this.camera);
         }
