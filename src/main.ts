@@ -5,7 +5,6 @@ namespace ThreeDScene {
         public static camera: THREE.PerspectiveCamera;
         public static renderer: THREE.WebGLRenderer;
 
-
         public static setSize(width: number, height: number): void {
             this.renderer.setSize(width, height);
             this.camera.aspect = width / height;
@@ -17,24 +16,18 @@ namespace ThreeDScene {
             target.appendChild(this.renderer.domElement);
             const zero = new THREE.Vector3(0, 0, 0);
             const clock = new THREE.Clock();
-            (function gameloop() {
-                ThreeDScene.Main.renderer.render(ThreeDScene.Main.scene, ThreeDScene.Main.camera);
-                // this.renderer.render(ThreeDScene.Main.scene, ThreeDScene.Main.camera);
-
-                ThreeDScene.Main.camera.position.x = 248 * Math.cos(0.1 * clock.getElapsedTime());
-                ThreeDScene.Main.camera.position.z = 248 * Math.sin(0.1 * clock.getElapsedTime());
-                ThreeDScene.Main.camera.lookAt(zero);
-                ThreeDScene.Main.renderer.render(ThreeDScene.Main.scene, ThreeDScene.Main.camera);
-
-                window.requestAnimationFrame(gameloop);
-            })();
+            const gameLoop = () => {
+                this.renderer.render(this.scene, this.camera);
+                this.camera.position.x = 248 * Math.cos(0.1 * clock.getElapsedTime());
+                this.camera.position.z = 248 * Math.sin(0.1 * clock.getElapsedTime());
+                this.camera.lookAt(zero);
+                this.renderer.render(this.scene, this.camera);
+                window.requestAnimationFrame(gameLoop);
+            };
+            gameLoop();
         }
 
-        public static setTiltLimits(lower: number, upper: number) {
-
-        }
-
-        public static tilt(amount: number) {
+        public static tilt(amount: number): void {
             this.camera.position.y = amount;
         }
 
@@ -63,16 +56,18 @@ namespace ThreeDScene {
 
         private static createFloor(scene: THREE.Scene, meshCreator: MeshCreator): void {
             const floorFactory = new FloorFactory(meshCreator);
-            floorFactory.newInstance(new THREE.Vector3(0, -375, 0), mesh => {
+            floorFactory.newInstance(new THREE.Vector3(0, -375, 0)).then((mesh) => {
                 scene.add(mesh);
-                this.objects = new Array<THREE.Object3D>();
                 Main.objects.push(mesh);
             });
         }
 
         private static createDMObject(scene: THREE.Scene, loader: THREE.JSONLoader): void {
             const dmFactory = new DMFactory(scene, loader);
-            dmFactory.newInstance();
+            dmFactory.newInstance().then((mesh) => {
+                scene.add(mesh);
+                Main.objects.push(mesh);
+            });
         }
 
         private static createLights(scene: THREE.Scene): void {
@@ -92,15 +87,15 @@ namespace ThreeDScene {
             const sphereGeometry = new THREE.SphereGeometry(3000, 60, 40);
             const uniforms = {
                 texture: {
-                    type: 't',
-                    value: THREE.ImageUtils.loadTexture('images/highres.jpg')
+                    type: "t",
+                    value: THREE.ImageUtils.loadTexture("images/highres.jpg"),
                 },
             };
 
             const material = new THREE.ShaderMaterial({
                 uniforms: uniforms,
-                vertexShader: document.getElementById('sky-vertex').textContent,
-                fragmentShader: document.getElementById('sky-fragment').textContent,
+                vertexShader: document.getElementById("sky-vertex").textContent,
+                fragmentShader: document.getElementById("sky-fragment").textContent,
             });
 
             const skyBox = new THREE.Mesh(sphereGeometry, material);

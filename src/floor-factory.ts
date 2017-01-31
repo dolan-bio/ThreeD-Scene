@@ -8,7 +8,7 @@ namespace ThreeDScene {
             this.textureLoader = new THREE.TextureLoader();
         }
 
-        public newInstance(meshPosition: THREE.Vector3, callback: (mesh: THREE.Mesh) => void): void {
+        public newInstance(meshPosition: THREE.Vector3): Promise<THREE.Mesh> {
             const texture = this.textureLoader.load("assets/models/boxFloor.png");
             texture.magFilter = THREE.NearestFilter;
             texture.minFilter = THREE.LinearMipMapLinearFilter;
@@ -17,9 +17,7 @@ namespace ThreeDScene {
                 map: texture,
             });
 
-            this.meshCreator.createMesh("assets/models/boxfloor.js", material, meshPosition, new THREE.Vector3(50, 50, 50), mesh => {
-                callback(mesh);
-            });
+            return this.meshCreator.createMesh("assets/models/boxfloor.js", material, meshPosition, new THREE.Vector3(50, 50, 50));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ThreeDScene {
             this.textureLoader = new THREE.TextureLoader();
         }
 
-        public newInstance(): void {
+        public newInstance(): Promise<THREE.Mesh> {
             const texture = this.textureLoader.load("assets/models/baked.png");
             texture.magFilter = THREE.NearestFilter;
             texture.minFilter = THREE.LinearMipMapLinearFilter;
@@ -20,9 +20,8 @@ namespace ThreeDScene {
             });
 
             const meshCreator = new MeshCreator(this.loader);
-            meshCreator.createMesh("assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50), mesh => {
-                this.scene.add(mesh);
-            });
+
+            return meshCreator.createMesh("assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
         }
     }
 }
