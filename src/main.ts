@@ -6,7 +6,6 @@ namespace ThreeDScene {
         private renderer: THREE.WebGLRenderer;
 
         constructor() {
-
             this.scene = new THREE.Scene();
 
             this.renderer = new THREE.WebGLRenderer({
@@ -48,7 +47,7 @@ namespace ThreeDScene {
         }
 
         private addObjectsToScene(loader: THREE.JSONLoader): void {
-            this.createCamera();
+            this.createCamera(this.scene);
 
             const meshCreator = new MeshCreator(loader);
             this.createFloor(this.scene, meshCreator);
@@ -83,12 +82,12 @@ namespace ThreeDScene {
             scene.add(light);
         }
 
-        private createCamera(): void {
+        private createCamera(scene: THREE.Scene): void {
             this.camera = new THREE.PerspectiveCamera(100);
             this.camera.near = 0.1;
             this.camera.far = 20000;
             this.camera.position.set(0, 66, 248);
-            this.scene.add(this.camera);
+            scene.add(this.camera);
         }
 
         private addListeners(renderer: THREE.Renderer, camera: THREE.PerspectiveCamera): void {
