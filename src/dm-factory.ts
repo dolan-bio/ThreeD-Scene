@@ -1,12 +1,8 @@
 namespace ThreeDScene {
     export class DMFactory {
-        private scene: THREE.Scene;
-        private loader: THREE.JSONLoader;
         private textureLoader: THREE.TextureLoader;
 
-        constructor(scene: THREE.Scene, loader: THREE.JSONLoader) {
-            this.scene = scene;
-            this.loader = loader;
+        constructor(private meshCreator: MeshCreator) {
             this.textureLoader = new THREE.TextureLoader();
         }
 
@@ -19,9 +15,7 @@ namespace ThreeDScene {
                 map: texture,
             });
 
-            const meshCreator = new MeshCreator(this.loader);
-
-            return meshCreator.createMesh("assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
+            return this.meshCreator.createMesh("assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
         }
     }
 }

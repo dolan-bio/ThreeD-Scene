@@ -47,26 +47,22 @@ namespace ThreeDScene {
             this.setupCamera();
 
             const meshCreator = new MeshCreator(loader);
-            Main.createFloor(this.scene, meshCreator);
-            Main.createDMObject(this.scene, loader);
-            Main.createLights(this.scene);
+            this.createFloor(this.scene, meshCreator);
+            this.createDMObject(this.scene, meshCreator);
+            this.createLights(this.scene);
         }
-
-        private static objects: THREE.Object3D[];
 
         private static createFloor(scene: THREE.Scene, meshCreator: MeshCreator): void {
             const floorFactory = new FloorFactory(meshCreator);
             floorFactory.newInstance(new THREE.Vector3(0, -375, 0)).then((mesh) => {
                 scene.add(mesh);
-                Main.objects.push(mesh);
             });
         }
 
-        private static createDMObject(scene: THREE.Scene, loader: THREE.JSONLoader): void {
-            const dmFactory = new DMFactory(scene, loader);
+        private static createDMObject(scene: THREE.Scene, meshCreator: MeshCreator): void {
+            const dmFactory = new DMFactory(meshCreator);
             dmFactory.newInstance().then((mesh) => {
                 scene.add(mesh);
-                Main.objects.push(mesh);
             });
         }
 
@@ -105,7 +101,7 @@ namespace ThreeDScene {
         }
 
         private static loadMisc(meshCreator: MeshCreator): void {
-            Main.addListeners(this.renderer, this.camera);
+            this.addListeners(this.renderer, this.camera);
         }
 
         private static setupCamera(): void {

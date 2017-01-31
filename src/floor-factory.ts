@@ -1,10 +1,8 @@
 namespace ThreeDScene {
     export class FloorFactory {
-        private meshCreator: MeshCreator;
         private textureLoader: THREE.TextureLoader;
 
-        constructor(meshCreator: MeshCreator) {
-            this.meshCreator = meshCreator;
+        constructor(private meshCreator: MeshCreator) {
             this.textureLoader = new THREE.TextureLoader();
         }
 
