@@ -13,8 +13,9 @@
 <body>
     <div id="content"></div>
     <script>
-        ThreeDScene.Main.run(document.getElementById('content'));
-        ThreeDScene.Main.setSize($('body').innerWidth(), window.innerHeight);
+        const stage = new ThreeDScene.Stage();
+        stage.run(document.getElementById('content'));
+        stage.setSize($('body').innerWidth(), window.innerHeight);
 
         function tiltCalculator(screenPosY) {
             var scaledY = screenPosY / 170;
@@ -24,12 +25,12 @@
         window.addEventListener('scroll', function () {
             var top = this.scrollY,
                 convertedTop = tiltCalculator(top);
-            ThreeDScene.Main.tilt(convertedTop);
+            stage.tilt(convertedTop);
         }, false);
 
-        window.addEventListener('resize', function () {
+        /*window.addEventListener('resize', function () {
             ThreeDScene.Main.setSize($('body').innerWidth(), window.innerHeight);
-        }, false);
+        }, false);*/
     </script>
 </body>
 

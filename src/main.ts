@@ -1,18 +1,33 @@
 namespace ThreeDScene {
-    export class Main {
+    export class Stage {
 
-        public static scene: THREE.Scene;
-        public static camera: THREE.PerspectiveCamera;
-        public static renderer: THREE.WebGLRenderer;
+        private scene: THREE.Scene;
+        private camera: THREE.PerspectiveCamera;
+        private renderer: THREE.WebGLRenderer;
 
-        public static setSize(width: number, height: number): void {
+        constructor() {
+
+            this.scene = new THREE.Scene();
+
+            this.renderer = new THREE.WebGLRenderer({
+                antialias: true,
+            });
+
+            this.renderer.shadowMap.enabled = true;
+            this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            this.renderer.setClearColor(0xFFFFFF, 1);
+
+            const loader = new THREE.JSONLoader();
+            this.addObjectsToScene(loader);
+        }
+
+        public setSize(width: number, height: number): void {
             this.renderer.setSize(width, height);
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
         }
 
-        public static run(target: Element): void {
-            this.main();
+        public run(target: Element): void {
             target.appendChild(this.renderer.domElement);
             const zero = new THREE.Vector3(0, 0, 0);
             const clock = new THREE.Clock();
@@ -28,24 +43,12 @@ namespace ThreeDScene {
             this.addListeners(this.renderer, this.camera);
         }
 
-        public static tilt(amount: number): void {
+        public tilt(amount: number): void {
             this.camera.position.y = amount;
         }
 
-        public static main(): void {
-            const loader = new THREE.JSONLoader();
-
-            this.scene = new THREE.Scene();
-
-            this.renderer = new THREE.WebGLRenderer({
-                antialias: true,
-            });
-
-            this.renderer.shadowMap.enabled = true;
-            this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-            this.renderer.setClearColor(0xFFFFFF, 1);
-
-            this.setupCamera();
+        private addObjectsToScene(loader: THREE.JSONLoader): void {
+            this.createCamera();
 
             const meshCreator = new MeshCreator(loader);
             this.createFloor(this.scene, meshCreator);
@@ -53,21 +56,21 @@ namespace ThreeDScene {
             this.createLights(this.scene);
         }
 
-        private static createFloor(scene: THREE.Scene, meshCreator: MeshCreator): void {
+        private createFloor(scene: THREE.Scene, meshCreator: MeshCreator): void {
             const floorFactory = new FloorFactory(meshCreator);
             floorFactory.newInstance(new THREE.Vector3(0, -375, 0)).then((mesh) => {
                 scene.add(mesh);
             });
         }
 
-        private static createDMObject(scene: THREE.Scene, meshCreator: MeshCreator): void {
+        private createDMObject(scene: THREE.Scene, meshCreator: MeshCreator): void {
             const dmFactory = new DMFactory(meshCreator);
             dmFactory.newInstance().then((mesh) => {
                 scene.add(mesh);
             });
         }
 
-        private static createLights(scene: THREE.Scene): void {
+        private createLights(scene: THREE.Scene): void {
             const alight = new THREE.AmbientLight(0xffffff, 0.3); // soft white light
             // scene.add(alight);
 
@@ -80,7 +83,7 @@ namespace ThreeDScene {
             scene.add(light);
         }
 
-        private static setupCamera(): void {
+        private createCamera(): void {
             this.camera = new THREE.PerspectiveCamera(100);
             this.camera.near = 0.1;
             this.camera.far = 20000;
@@ -88,7 +91,7 @@ namespace ThreeDScene {
             this.scene.add(this.camera);
         }
 
-        private static addListeners(renderer: THREE.Renderer, camera: THREE.PerspectiveCamera): void {
+        private addListeners(renderer: THREE.Renderer, camera: THREE.PerspectiveCamera): void {
             window.addEventListener("resize", () => {
                 const WIDTH = window.innerWidth;
                 const HEIGHT = window.innerHeight;
