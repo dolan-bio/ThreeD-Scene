@@ -10,6 +10,10 @@
     "build": "npm run tsc && npm run uglify",
     "start": "npm run tsc && http-server ."
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolan-bio/ThreeD-Scene.git"
+  },
   "author": "Dolan Miu",
   "license": "MIT",
   "devDependencies": {
