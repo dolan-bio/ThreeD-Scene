@@ -1,8 +1,6 @@
 import * as THREE from "three";
 
 import { MeshCreator } from "./mesh-creator";
-import {DmModel} from "./assets/models/dm";
-// const dmModel = require("./assets/models/dm.js");
 
 export class DMFactory {
     private textureLoader: THREE.TextureLoader;

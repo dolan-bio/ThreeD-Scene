@@ -1,8 +1,8 @@
 import * as THREE from "three";
 
-import { MeshCreator } from "./mesh-creator";
-import { FloorFactory } from "./floor-factory";
 import { DMFactory } from "./dm-factory";
+import { FloorFactory } from "./floor-factory";
+import { MeshCreator } from "./mesh-creator";
 
 export class Stage {
 
