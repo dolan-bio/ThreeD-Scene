@@ -1,21 +1,23 @@
-namespace ThreeDScene {
-    export class DMFactory {
-        private textureLoader: THREE.TextureLoader;
+import * as THREE from "three";
 
-        constructor(private meshCreator: MeshCreator) {
-            this.textureLoader = new THREE.TextureLoader();
-        }
+import { MeshCreator } from "./mesh-creator";
 
-        public newInstance(): Promise<THREE.Mesh> {
-            const texture = this.textureLoader.load("assets/models/baked.png");
-            texture.magFilter = THREE.NearestFilter;
-            texture.minFilter = THREE.LinearMipMapLinearFilter;
+export class DMFactory {
+    private textureLoader: THREE.TextureLoader;
 
-            const material = new THREE.MeshLambertMaterial({
-                map: texture,
-            });
+    constructor(private meshCreator: MeshCreator) {
+        this.textureLoader = new THREE.TextureLoader();
+    }
 
-            return this.meshCreator.createMesh("assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
-        }
+    public newInstance(): Promise<THREE.Mesh> {
+        const texture = this.textureLoader.load("../assets/models/baked.png");
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.LinearMipMapLinearFilter;
+
+        const material = new THREE.MeshLambertMaterial({
+            map: texture,
+        });
+
+        return this.meshCreator.createMesh("../assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
     }
 }

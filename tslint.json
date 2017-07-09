@@ -31,8 +31,6 @@
     "max-line-length": [
       false
     ],
-    "no-namespace": [
-      false
-    ]
+    "no-string-literal": false
   }
 }
