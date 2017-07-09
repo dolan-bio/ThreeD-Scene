@@ -1,6 +1,8 @@
 import * as THREE from "three";
 
 import { MeshCreator } from "./mesh-creator";
+import {DmModel} from "./assets/models/dm";
+// const dmModel = require("./assets/models/dm.js");
 
 export class DMFactory {
     private textureLoader: THREE.TextureLoader;
@@ -10,7 +12,7 @@ export class DMFactory {
     }
 
     public newInstance(): Promise<THREE.Mesh> {
-        const texture = this.textureLoader.load("../assets/models/baked.png");
+        const texture = this.textureLoader.load("./assets/models/baked.png");
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.LinearMipMapLinearFilter;
 
@@ -18,6 +20,6 @@ export class DMFactory {
             map: texture,
         });
 
-        return this.meshCreator.createMesh("../assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
+        return this.meshCreator.createMesh("./assets/models/dm.js", material, new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 50, 50));
     }
 }

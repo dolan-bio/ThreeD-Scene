@@ -23,6 +23,7 @@
     "typescript": "^2.1.5"
   },
   "dependencies": {
+    "@types/node": "^8.0.9",
     "@types/three": "^0.83.5",
     "rimraf": "^2.6.1",
     "three": "^0.86.0"
