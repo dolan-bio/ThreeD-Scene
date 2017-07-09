@@ -1,5 +1,5 @@
 {
-  "name": "3d-scene",
+  "name": "@dolan-bio/3d-scene",
   "version": "1.0.0",
   "description": "3d scene for dolan.bio",
   "main": "dist/bundle.js",
@@ -7,8 +7,9 @@
     "test": "npm run lint",
     "tsc": "tsc -p .",
     "uglify": "uglifyjs --compress --mangle --output='dist/bundle.js' -- dist/bundle.js",
-    "build": "npm run tsc && npm run uglify",
-    "start": "npm run tsc && http-server ."
+    "build": "npm run tsc",
+    "start": "npm run tsc && http-server .",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
