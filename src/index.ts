@@ -57,7 +57,7 @@ export class Stage {
         const meshCreator = new MeshCreator(loader);
         this.createFloor(this.scene, meshCreator);
         this.createDMObject(this.scene, meshCreator);
-        this.createLights(this.scene);
+        // this.createLights(this.scene);
     }
 
     private createFloor(scene: THREE.Scene, meshCreator: MeshCreator): void {

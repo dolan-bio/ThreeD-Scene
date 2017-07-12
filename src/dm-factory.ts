@@ -14,7 +14,7 @@ export class DMFactory {
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.LinearMipMapLinearFilter;
 
-        const material = new THREE.MeshLambertMaterial({
+        const material = new THREE.MeshBasicMaterial({
             map: texture,
         });
 
